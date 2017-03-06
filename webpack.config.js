@@ -12,8 +12,7 @@ module.exports = {
     jsx: APP_PATH,
     vendor: [
       'react',
-      'react-dom',
-      'react-intl'
+      'react-dom'
     ]
   },
   output: {
@@ -67,6 +66,14 @@ module.exports = {
       {
         test: /\.json$/,
         use: 'json-loader'
+      },
+      {
+        test: /\.svg$/,
+        include: /client\/icons/,
+        loaders: [
+          'babel-loader',
+          'svg-react-loader'
+        ]
       }
     ]
   },

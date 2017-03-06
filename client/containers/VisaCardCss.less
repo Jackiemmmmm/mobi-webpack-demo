@@ -57,30 +57,66 @@ ul {
   flex-direction: row;
   width: 100%;
   height: 100%;
+  .backgroundLinear {
+    background: linear-gradient(to bottom right, #2C8DE8, #6B1ED6);
+  }
+  header {
+    width: 100%;
+    height: 7.5%;
+    font-size: 1.1rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .arrowLeft {
+      width: 10%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
   .cardImageLayout {
     height: 33%;
     display: flex;
     flex: 1;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom right, #2C8DE8, #6B1ED6);
-    position: relative;
-    img {
+    // position: relative;
+    .cardPosition {
       width: 77.2%;
-    }
-    span {
-      position: absolute;
-      top: calc(~"50% - 4.5rem");
-      right: 0;
-      width: 1.3rem;
-      height: 9rem;
-      background: rgba(255, 255, 255, 0.23);
-      border-top-left-radius: 9px;
-      border-bottom-left-radius: 9px;
+      position: relative;
+      img {
+        width: 100%;
+      }
+      // span {
+      //   position: absolute;
+      //   top: calc(~"50% - 4.5rem");
+      //   right: 0;
+      //   width: 1.3rem;
+      //   height: 9rem;
+      //   background: rgba(255, 255, 255, 0.23);
+      //   border-top-left-radius: 9px;
+      //   border-bottom-left-radius: 9px;
+      // }
+      p {
+        position: absolute;
+        color: white;
+        left: 2rem;
+        bottom: 3.5rem;
+        &:last-child {
+          bottom: 1.5rem;
+        }
+      }
     }
   }
   .cardTextLayout {
-    height: 67%;
+    height: 58.5%;
     display: flex;
     flex: 1.5;
     flex-direction: column;
