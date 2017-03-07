@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './VisaCardCss';
+import styles from './VisaCardCss.less';
 import VisaCardImg from '../images/card_blocked.png';
 import message from './message.json';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
@@ -21,17 +21,17 @@ export default class VisaCard extends Component {
     }
   }
   render() {
-    let language = message[this.state.language]
+    const language = message[this.state.language]
     return (
       <div className={styles.cardWarrper}>
         <div className={styles.backgroundLinear}>
           <header>
-            <a onClick={() => this._goToNative('pop')} className={styles.arrowLeft} href="javascript:void(0)"><ArrowLeftIcon /></a>
-            {language['card_view_title']}
+            <a onClick={() => this._goToNative('pop')} className={styles.arrowLeft}><ArrowLeftIcon /></a>
+            {language.card_view_title}
           </header>
           <div className={styles.cardImageLayout}>
             <div className={styles.cardPosition}>
-              <img src={VisaCardImg} />
+              <img src={VisaCardImg} alt="Mobi Visa Card" />
               <p>XXXX &nbsp; XXXX &nbsp; XXXX &nbsp; XXXX</p>
               <p>{this.state.phoneNum}</p>
             </div>
@@ -40,16 +40,16 @@ export default class VisaCard extends Component {
 
         <div className={styles.cardTextLayout}>
           <ul>
-            <li>{language['card_intro_view_text_first']}</li>
-            <li>{language['card_intro_view_text_second']}</li>
-            <li>{language['card_intro_view_text_third']}</li>
-            <li>{language['card_intro_view_text_fourth']}</li>
+            <li>{language.card_intro_view_text_first}</li>
+            <li>{language.card_intro_view_text_second}</li>
+            <li>{language.card_intro_view_text_third}</li>
+            <li>{language.card_intro_view_text_fourth}</li>
           </ul>
-          <a onClick={() => this._goToNative('apply')} className={styles.btnApply} href="javascript:void(0)">
-            {language['card_intro_view_button_trial']}
+          <a onClick={() => this._goToNative('apply')} className={styles.btnApply}>
+            {language.card_intro_view_button_trial}
           </a>
-          <a onClick={() => this._goToNative('knowMore')} className={styles.btnKnowMore} href="javascript:void(0)">
-            {language['card_intro_view_text_fee']}
+          <a onClick={() => this._goToNative('knowMore')} className={styles.btnKnowMore}>
+            {language.card_intro_view_text_fee}
           </a>
         </div>
       </div>
