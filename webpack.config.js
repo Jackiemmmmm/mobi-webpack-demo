@@ -1,24 +1,15 @@
+const webpack = require('webpack');
 const {join, resolve} = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const { getIfUtils, removeEmpty } = require('webpack-config-utils')
+const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
 
 const ROOT_PATH = resolve(__dirname);
 const APP_PATH = resolve(ROOT_PATH, 'client');
 const BUILD_PATH = resolve(ROOT_PATH, 'build');
 
-module.exports = {
-  entry: {
-    jsx: APP_PATH,
-    vendor: [
-      'react',
-      'react-dom'
-    ]
-  },
-  output: {
-    path: BUILD_PATH,
-    filename: '[name].bundle.js'
-  },
+const baseConfig = {
   module: {
     rules: [
       {
@@ -77,7 +68,56 @@ module.exports = {
       }
     ]
   },
-  plugins: [
+  resolve: {
+    modules: [
+      resolve('client'),
+      'node_modules'
+    ],
+    extensions: ['.js', '.less', '.jsx']
+  },
+  plugins: removeEmpty([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production'),
+        APP_ENV: JSON.stringify(process.env.APP_ENV || 'production')
+      }
+    }),
+    ifProduction(new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      // 删除所有的注释
+      comments: false,
+      compress: {
+        // 在UglifyJs删除没有用到的代码时不输出警告  
+        warnings: false,
+        // 删除所有的 `console` 语句
+        // 还可以兼容ie浏览器
+        drop_console: true,
+        // 内嵌定义了但是只用到一次的变量
+        collapse_vars: true,
+        // 提取出出现多次但是没有定义成变量去引用的静态值
+        reduce_vars: true,
+      }
+    })),
+    ifProduction(new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })),
+  ])
+}
+
+module.exports = Object.assign({}, baseConfig, {
+  entry: {
+    jsx: APP_PATH,
+    vendor: [
+      'react',
+      'react-dom'
+    ]
+  },
+  output: {
+    path: BUILD_PATH,
+    filename: '[name].bundle.js'
+  },
+  
+  plugins: baseConfig.plugins.concat([
     new HtmlwebpackPlugin({
       title: 'Mobi WebView',
       template: 'client/index.html'
@@ -87,8 +127,5 @@ module.exports = {
       allChunks: true,
       disable: false,
     })
-  ],
-  resolve: {
-    extensions: ['.js', '.less', '.jsx']
-  },
-}
+  ])
+});
