@@ -7,8 +7,8 @@ const baseConfig = require('./webpack.config.base');
 
 module.exports = Object.assign({}, baseConfig, {
   entry: {
-    webView: WEB_VIEW_PATH,
-    webViewVendor: [
+    jsx: WEB_VIEW_PATH,
+    vendor: [
       'react',
       'react-dom'
     ]
@@ -17,7 +17,7 @@ module.exports = Object.assign({}, baseConfig, {
     new HtmlwebpackPlugin({
       title: 'Mobi WebView',
       template: 'client/webView/index.html',
-      chunks: ['webView', 'webViewVendor']
+      chunks: ['jsx', 'vendor']
     }),
   ])
 })

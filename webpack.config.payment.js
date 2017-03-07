@@ -7,8 +7,8 @@ const baseConfig = require('./webpack.config.base');
 
 module.exports = Object.assign({}, baseConfig, {
   entry: {
-    payment: PAYMENT_PATH,
-    paymentVendor: [
+    jsx: PAYMENT_PATH,
+    vendor: [
       'react',
       'react-dom',
       'redux',
@@ -22,7 +22,7 @@ module.exports = Object.assign({}, baseConfig, {
     new HtmlwebpackPlugin({
       title: 'Mobi Payment',
       template: 'client/payment/index.html',
-      chunks: ['payment', 'paymentVendor'],
+      chunks: ['jsx', 'vendor'],
     })
   ])
 })
