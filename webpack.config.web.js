@@ -6,20 +6,20 @@ const { getIfUtils, removeEmpty } = require('webpack-config-utils')
 const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
 
 const ROOT_PATH = resolve(__dirname);
-const APP_PATH = resolve(ROOT_PATH, 'client');
+const WEB_VIEW_PATH = resolve(ROOT_PATH, 'client/webView');
 const BUILD_PATH = resolve(ROOT_PATH, 'build');
 
 module.exports = {
   entry: {
-    jsx: APP_PATH,
-    vendor: [
+    webView: WEB_VIEW_PATH,
+    webViewVendor: [
       'react',
       'react-dom'
     ]
   },
   output: {
     path: BUILD_PATH,
-    filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js')
+    filename: ifProduction('scripts/[id].bundle.js?v=[hash]', 'scripts/[id].bundle.js')
   },
   module: {
     rules: [
@@ -54,7 +54,6 @@ module.exports = {
       {
         test: /\.(ico|png|jpg|svg)$/,
         loader: 'url-loader',
-        include: /client\/images/,
         options: {
           limit: 10240,
           name: 'images/[name].[ext]?v=[hash:base64:5]'
@@ -71,7 +70,6 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        include: /client\/icons/,
         loaders: [
           'babel-loader',
           'svg-react-loader'
@@ -111,21 +109,18 @@ module.exports = {
           if_return: true,
         }
       }),
-      new webpack.LoaderOptionsPlugin({
+      new webpack.LoaderOptionsPlugin({ 
         minimize: true,
         debug: false,
       })
     ),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: ifProduction('scripts/vendor.bundle.js?v=[hash]', 'pscripts/vendor.bundle.js')
-    }),
     new HtmlwebpackPlugin({
       title: 'Mobi WebView',
-      template: 'client/index.html'
+      template: 'client/webView/index.html',
+      chunks: ['webView', 'webViewVendor']
     }),
     new ExtractTextPlugin({
-      filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
+      filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/[id].bundle.css'),
       allChunks: true,
       disable: false,
     })

@@ -1,0 +1,137 @@
+{
+    "en": {
+        "card_view_title": "Mobi Visa Card",
+        "card_intro_view_text_first": "Use your existing balance in Mobi to\n  pay anywhere Visa® is accepted.",
+        "card_intro_view_text_second": "Get cash at more than 2 Million Visa®\n  compatible ATMs.",
+        "card_intro_view_text_third": "No fees when used with U.S. Dollars.\n  Zero. Zilch. Nada.",
+        "card_intro_view_text_fourth": "Free worldwide shipping.",
+        "card_intro_view_button_trial": "Get 3 Months' Free Trial",
+        "card_intro_view_text_fee": "$2/month after trial"
+    },
+    "zh-HK": {
+        "card_view_title": "Mobi Visa卡",
+        "card_intro_view_text_first": "您可以在任何接受Visa卡付款的地方\n  使用您Mobi賬號里的錢",
+        "card_intro_view_text_second": "可以在200多萬臺兼容Visa卡的自動\n  取款機內取出現金",
+        "card_intro_view_text_third": "使用美金不收取任何手續費\n  Zero. Zilch. Nada.",
+        "card_intro_view_text_fourth": "全球自由購",
+        "card_intro_view_button_trial": "獲取3個月免費試用",
+        "card_intro_view_text_fee": "試用結束後每月收取2美元短信費"
+    },
+    "zh_CN": {
+        "card_view_title": "Mobi Visa卡",
+        "card_intro_view_text_first": "您可以在任何接受Visa®卡付款的地方\n  使用Mobi付款。",
+        "card_intro_view_text_second": "可以在200多万台兼容Visa®卡的自动\n  取款机内取出现金。",
+        "card_intro_view_text_third": "使用美金支付不收取任何手续费\n  Zero. Zilch. Nada。",
+        "card_intro_view_text_fourth": "全球免费派送。",
+        "card_intro_view_button_trial": "获取3个月免费试用",
+        "card_intro_view_text_fee": "试用结束后每月收取2美元短信费用"
+    },
+    "de": {
+        "card_view_title": "Mobi Visa Karte",
+        "card_intro_view_text_first": "Benutze dein vorhandenes Geld in Mobi, um überall zu bezahlen, wo Visa® akzeptiert wird.",
+        "card_intro_view_text_second": "Beziehe Bargeld von über 2 Millionen Visa®-kompatiblen Geldautomaten.",
+        "card_intro_view_text_third": "Keine Gebühren bei Einsatz mit US-Dollar. Null. Zero. Nada.",
+        "card_intro_view_text_fourth": "Kostenfreie weltweite Lieferung.",
+        "card_intro_view_button_trial": "Teste 3 Monate kostenfrei",
+        "card_intro_view_text_fee": "$2/Monat nach 3 Monaten"
+    },
+    "es": {
+        "card_view_title": "Tarjeta Visa de Mobi",
+        "card_intro_view_text_first": "Puedes utilizar el dinero que tienes en Mobi para pagar en cualquier punto donde se acepte Visa®.",
+        "card_intro_view_text_second": "Consigue dinero en efectivo en más de 2 millones de cajeros compatibles con Visa®.",
+        "card_intro_view_text_third": "No se aplican tasas cuando se utilizan dólares estadounidenses. Cero, ninguna, nada.",
+        "card_intro_view_text_fourth": "Envíos gratuitos a todo el mundo",
+        "card_intro_view_button_trial": "Consigue una versión de prueba de 3 meses",
+        "card_intro_view_text_fee": "2$ mensuales después de la versión de prueba"
+    },
+    "fr": {
+        "card_view_title": "Carte Mobi Visa",
+        "card_intro_view_text_first": "Utiliser votre argent avec Mobi pour payer partout où Visa® est accepté",
+        "card_intro_view_text_second": "Retirer de l'argent dans plus de 2 millions de distributeurs compatible avec Visa®.",
+        "card_intro_view_text_third": "Pas de frais en utilisant des U.S. Dollars. Zero. Zilch. Nada.",
+        "card_intro_view_text_fourth": "Livraison internationale gratuite",
+        "card_intro_view_button_trial": "3 mois de période d'essai",
+        "card_intro_view_text_fee": "$2/mois après période d'essai"
+    },
+    "id": {
+        "card_view_title": "Kartu Visa Mobi",
+        "card_intro_view_text_first": "Gunakan uang Anda di Mobi untuk membayar di mana saja Visa® dapat diterima.",
+        "card_intro_view_text_second": "Dapatkan uang tunai di lebih dari 2 Juta ATM yang mendukung Visa®.",
+        "card_intro_view_text_third": "Tanpa biaya jika digunakan dalam mata uang dolar AS. Nol. Nihil. Tidak ada.",
+        "card_intro_view_text_fourth": "Pengiriman gratis ke seluruh dunia",
+        "card_intro_view_button_trial": "Dapatkan masa percobaan gratis 3 bulan",
+        "card_intro_view_text_fee": "$2/bulan setelah masa percobaan"
+    },
+    "it": {
+        "card_view_title": "Carta Mobi Visa",
+        "card_intro_view_text_first": "Utilizza i tuoi soldi da Mobi per pagare. Visa® è accettata ovunque.",
+        "card_intro_view_text_second": "Preleva più di 2 milioni Visa® compatibile ATMs.",
+        "card_intro_view_text_third": "Nessuna tassazione quando si usa il Dollaro Americano. Zero, Zilch, Nada.",
+        "card_intro_view_text_fourth": "Spedizione mondiale gratuita",
+        "card_intro_view_button_trial": "Hai 3 mesi di prova gratuita",
+        "card_intro_view_text_fee": "$2/mese dopo la prova"
+    },
+    "jp": {
+        "card_view_title": "Mobi Visaカード",
+        "card_intro_view_text_first": "Visa®が利用できる場所ならどこでも、Mobiで残高を利用できます。",
+        "card_intro_view_text_second": "Visa®対応の200万台以上のATMで現金を下すことができます。",
+        "card_intro_view_text_third": "米ドルがゼロの場合は手数料はかかりません。",
+        "card_intro_view_text_fourth": "全世界送料無料",
+        "card_intro_view_button_trial": "3ヶ月のフリートライアル",
+        "card_intro_view_text_fee": "トライアル終了後は月額2ドル"
+    },
+    "ko": {
+        "card_view_title": "모비비자카드",
+        "card_intro_view_text_first": "모비에 있는 돈을 비자가 수용되는 어디서나 사용합니다.",
+        "card_intro_view_text_second": "200만개이상의 비자가능 ATM에서 현금을 꺼냅니다.",
+        "card_intro_view_text_third": "US달러, Zero. Zilch. Nada를 사용할때는 비용이 없습니다.",
+        "card_intro_view_text_fourth": "세계선적 무료",
+        "card_intro_view_button_trial": "3개월 무료체험판을 써보세요",
+        "card_intro_view_text_fee": "체험판후 $2/월"
+    },
+    "nb": {
+        "card_view_title": "Mobi Visa kort",
+        "card_intro_view_text_first": "Bruk din penger i Mobi til å betale overalt hvor Visa® er akseptert.",
+        "card_intro_view_text_second": "Få kontanter i mer enn 2 millioner Visa® kompatible minibanker.",
+        "card_intro_view_text_third": "Ingen gebyrer ved bruk i amerikanske dollar. Null. Niks. Nada.",
+        "card_intro_view_text_fourth": "Gratis shipping verden over.",
+        "card_intro_view_button_trial": "Få 3 måneders gratis prøveperiode.",
+        "card_intro_view_text_fee": "$2/måned etter prøveperiode"
+    },
+    "pt": {
+        "card_view_title": "Cartão Visa Mobi",
+        "card_intro_view_text_first": "Utilize seu dinheiro no Mobi para fazer pagamentos em qualquer lugar que aceite Visa®.",
+        "card_intro_view_text_second": "Saque dinheiro em mais de 2 milhões de caixas que aceitam Visa®.",
+        "card_intro_view_text_third": "Sem taxas quando utilizado com dólares norte-americanos. Zero. Zilch. Nada.",
+        "card_intro_view_text_fourth": "Frete internacional gratuito",
+        "card_intro_view_button_trial": "Aproveite 3 meses de avaliação gratuita",
+        "card_intro_view_text_fee": "$2/mês após a avaliação"
+    },
+    "ru": {
+        "card_view_title": "Карта Mobi Visa",
+        "card_intro_view_text_first": "Используйте ваши доступные в Mobi деньги, чтобы платить везде, где принимется Visa®.",
+        "card_intro_view_text_second": "Получайте наличные в банкоматах, которые принимают карты  Visa®. Их насчитывается более 2 миллионов.",
+        "card_intro_view_text_third": "Без комиссии при использовании долларов США. Ноль. Zilch. Nada.",
+        "card_intro_view_text_fourth": "Бесплатная доставка по всему миру",
+        "card_intro_view_button_trial": "3 месяца бесплатного пробного периода",
+        "card_intro_view_text_fee": "$2 в месяц после пробного периода"
+    },
+    "th": {
+        "card_view_title": "บัตร Mobi Visa",
+        "card_intro_view_text_first": "ใช้เงินที่มีอยู่ใน Mobi เพื่อจ่ายได้ทุกที่ที่รับบัตร Visa®",
+        "card_intro_view_text_second": "เบิกถอนเงินสดได้จากตู้ ATM ที่รับบัตร Visa® กว่า 2 ล้านตู้",
+        "card_intro_view_text_third": "ไม่มีค่าธรรมเนียมใด ๆ เมื่อใช้ดอลลาร์สหรัฐ ไร้ซึ่ง ไม่มีจริง ๆ ไม่มีเลย",
+        "card_intro_view_text_fourth": "ส่งฟรีทั่วโลก",
+        "card_intro_view_button_trial": "ทดลองใช้ฟรี 3 เดือน",
+        "card_intro_view_text_fee": "เดือนละ $2 หลังช่วงทดลองใช้"
+    },
+    "vi": {
+        "card_view_title": "Thẻ Visa Mobi",
+        "card_intro_view_text_first": "Sử dụng tiền hiện có trong Mobi để thanh toán bất kỳ nơi nào chấp nhận thẻ Visa®.",
+        "card_intro_view_text_second": "Rút tiền mặt tại hơn 2 triệu máy ATM chấp nhận thẻ Visa®.",
+        "card_intro_view_text_third": "Không tốn phí khi sử dụng với Đô la Mỹ. Zero. Zilch. Nada.",
+        "card_intro_view_text_fourth": "Miễn phí vận chuyển trên toàn thế giới",
+        "card_intro_view_button_trial": "Nhận 3 tháng dùng thử miễn phí",
+        "card_intro_view_text_fee": "$2/tháng sau dùng thử"
+    }
+}

@@ -6,14 +6,30 @@ yarn install or npm install
 ```
 
 ## run
-It's served in http://localhost:9492 .
+default served is webview
+webview served in http://localhost:9000 .
 ```sh
-yarn start
+yarn start:webview
+```
+
+payment served in http://localhost:9001 .
+```sh
+yarn start:payment
 ```
 
 
 ## build
-It's served in ./build folder.
+build served in ./build folder
 ```sh
-yarn run build
+yarn build
+```
+
+webview served in ./build folder.
+```sh
+yarn build:webview
+```
+
+payment served in ./build folder.
+```sh
+yarn build:payment
 ```

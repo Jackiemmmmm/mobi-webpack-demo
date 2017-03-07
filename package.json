@@ -7,8 +7,12 @@
   "author": "Jackiemmmmm <jackie.tu@btcc.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --history-api-fallback --hot --inline --progress --port 9492 --host 0.0.0.0",
-    "build": "rimraf build && cross-env NODE_ENV=production webpack --progress --colors"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9000 --host 0.0.0.0",
+    "start:webview": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9000 --host 0.0.0.0",
+    "start:payment": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.payment.js --history-api-fallback --hot --inline --progress --port 9001 --host 0.0.0.0",
+    "build": "rimraf build && npm run build:webview && npm run build:payment",
+    "build:webview": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.web.js --progress --colors",
+    "build:payment": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.payment.js --progress --colors"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -50,7 +54,11 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.8",
     "redux": "^3.6.0",
+    "redux-actions": "^2.0.1",
+    "redux-saga": "^0.14.3",
     "redux-thunk": "^2.2.0"
   }
 }
