@@ -9,7 +9,8 @@ const BUILD_PATH = resolve(ROOT_PATH, 'build');
 module.exports = {
   output: {
     path: BUILD_PATH,
-    filename: ifProduction('scripts/[id].bundle.js?v=[hash]', 'scripts/[id].bundle.js')
+    filename: ifProduction('scripts/[id].bundle.js?v=[hash]', 'scripts/[id].bundle.js'),
+    chunkFilename: ifProduction('scripts/[id].chunk.js?v=[chunkhash]', 'scripts/[id].chunk.js')
   },
   module: {
     rules: [
@@ -20,7 +21,7 @@ module.exports = {
           use: [
             {
               loader: 'css-loader',
-              query: {
+              options: {
                 modules: true,
                 sourceMap: true,
                 importLoaders: 1,
@@ -104,6 +105,10 @@ module.exports = {
         debug: false,
       })
     ),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: ifProduction('scripts/vendor.bundle.js?v=[hash]', 'scripts/vendor.bundle.js')
+    }),
     new ExtractTextPlugin({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/[id].bundle.css'),
       allChunks: true,

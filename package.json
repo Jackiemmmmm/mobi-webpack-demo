@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9000 --host 0.0.0.0",
     "start:webview": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9000 --host 0.0.0.0",
     "start:payment": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.payment.js --history-api-fallback --hot --inline --progress --port 9001 --host 0.0.0.0",
-    "build": "rimraf build && npm run build:webview && npm run build:payment",
+    "build": "rimraf build && npm run build:payment",
     "build:webview": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.web.js --progress --colors",
     "build:payment": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.payment.js --progress --colors"
   },
