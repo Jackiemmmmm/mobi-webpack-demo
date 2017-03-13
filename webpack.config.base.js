@@ -15,7 +15,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.less$/i,
+        test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -29,10 +29,10 @@ module.exports = {
               }
             },
             {
-              loader: 'less-loader'
+              loader: 'postcss-loader',
             }
           ]
-        })
+        }),
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -80,7 +80,7 @@ module.exports = {
       resolve('client'),
       'node_modules'
     ],
-    extensions: ['.js', '.less', '.jsx']
+    extensions: ['.js', '.jsx', '.json']
   },
   plugins: removeEmpty([
     ifProduction(
@@ -100,7 +100,7 @@ module.exports = {
           if_return: true,
         }
       }),
-      new webpack.LoaderOptionsPlugin({ 
+      new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: false,
       })

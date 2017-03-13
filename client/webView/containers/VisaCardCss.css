@@ -1,4 +1,4 @@
-@import '../../../common/less/common.less';
+@import '../../common/css/common.css';
 
 @blue: #3586ea;
 .cardWarrper {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './VisaCardCss.less';
+import styles from './VisaCardCss.css';
 import VisaCardImg from '../images/card_blocked.png';
 import message from './message.json';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
