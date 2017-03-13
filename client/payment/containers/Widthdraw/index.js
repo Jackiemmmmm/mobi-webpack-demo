@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import NavBar from '../../components/NavBar';
 import ListItem from '../../components/ListItem';
 import styles from './withdraw.css';
-import { linkSaga } from '../../actions';
+// import { linkSaga } from '../../actions';
 
 class Withdraw extends Component {
   constructor(props) {
@@ -33,7 +33,8 @@ export default connect(
   state => ({
     test: state.Withdraw.defaultWithdraw
   }),
-  dispatch => ({
-    linkSaga: bindActionCreators(linkSaga, dispatch)
-  })
+  // dispatch => ({
+  //   linkSaga: bindActionCreators(linkSaga, dispatch)
+  // })
+  null
 )(Withdraw)
