@@ -1,5 +1,5 @@
 const defaultState = {
-  defaultWithdraw: 'none'
+  bits: '0'
 }
 const Withdraw = (state = defaultState, action) => {
   switch (action.type) {

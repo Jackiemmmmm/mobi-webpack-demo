@@ -11,8 +11,27 @@ class Withdraw extends Component {
     super(props);
     this.state = {
       image: true,
-      image1: false
+      image1: false,
+      updateData: []
     }
+  }
+  componentWillMount() {
+    this.setState({
+      updateData: [
+        {
+          title: 'Tony Stark',
+          num: 1234,
+          image: true,
+          currency: 'EUR',
+        },
+        {
+          title: 'Benjamin Button',
+          num: 5678,
+          image: false,
+          currency: 'DOLLER',
+        }
+      ]
+    })
   }
   render() {
     return (
@@ -20,8 +39,12 @@ class Withdraw extends Component {
         <NavBar title={'Withdraw'} />
         {this.props.test}
         <div style={{ width: '100%', height: '1px', backgroundColor: 'black' }} />
-        <ListItem title={'Tony Stark'} num={1234} image={this.state.image} currency={'EUR'} pushTo={(text) => { this._linkTo(text) }} />
-        <ListItem title={'Benjamin Button'} num={5678} image={this.state.image1} currency={'EUR'} pushTo={(text) => { this._linkTo(text) }} />
+        {this.state.updateData.length > 0 && this.state.updateData.map(data =>
+          <ListItem
+            key={data.title}
+            data={data}
+            pushTo={() => this._linkTo(data.title)}
+          />)}
       </div>
     )
   }
@@ -30,9 +53,9 @@ class Withdraw extends Component {
   }
 }
 export default connect(
-  state => ({
-    test: state.Withdraw.defaultWithdraw
-  }),
+  // state => ({
+  //   test: state.Withdraw.defaultWithdraw
+  // }),
   // dispatch => ({
   //   linkSaga: bindActionCreators(linkSaga, dispatch)
   // })
