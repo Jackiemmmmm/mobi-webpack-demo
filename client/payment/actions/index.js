@@ -1,6 +1,7 @@
-export function goToSend(data) {
-  console.log(data, 'action');
-  return {
-    type: 'GO_TO_SEND', data
-  }
+const goToSend = data => ({
+  type: 'GO_TO_SEND', data
+})
+
+export default {
+  goToSend
 }

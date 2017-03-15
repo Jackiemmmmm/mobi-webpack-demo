@@ -12,7 +12,7 @@ const ListItem = ({ data, pushTo }) => {
       <div className={classNames(styles.image, image && styles.show)}>{image && 'have image'}</div>
       <p>
         {title}
-        <span>({num}) {currency}</span>
+        {num && <span>({num}) {currency}</span>}
       </p>
       <div className={styles.arrowRight}>arrowRight</div>
     </div>

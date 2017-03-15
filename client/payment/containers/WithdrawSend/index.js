@@ -36,6 +36,9 @@ class WithdrawSend extends Component {
             <span>{sendData.currency}</span>
           </div>
         </div>
+        <button>
+          Send
+        </button>
       </div>
     )
   }

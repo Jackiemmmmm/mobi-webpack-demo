@@ -14,7 +14,6 @@ import Layout from './components/Layout';
 import configure from './store';
 
 const store = configure();
-console.log(store.getState());
 
 ReactDOM.render(
   <Provider store={store}>
@@ -26,7 +25,7 @@ ReactDOM.render(
         <Route path="/newRecipient" component={Recipient} />
         <Route path="/profile" component={Profile} />
         <Route path="/history" component={TransferHistory} />
-        <Route path="/:name" component={WithdrawSend} />
+        <Route path="/withdrawSend" component={WithdrawSend} />
       </Route>
       <Route path="*" component={ErrorPage} />
     </Router>

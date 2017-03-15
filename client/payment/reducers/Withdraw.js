@@ -5,11 +5,24 @@ const defaultState = {
     num: '-',
     image: '-',
     currency: '-',
-  }
+  },
+  updateData: [
+    {
+      title: 'Tony Stark',
+      num: 1234,
+      image: true,
+      currency: 'EUR',
+    },
+    {
+      title: 'Benjamin Button',
+      num: 5678,
+      image: false,
+      currency: 'DOLLER',
+    }
+  ]
 }
 
 const Withdraw = (state = defaultState, action) => {
-  console.log(action, 'reducer');
   const assign = obj => (
     Object.assign({}, state, obj)
   )

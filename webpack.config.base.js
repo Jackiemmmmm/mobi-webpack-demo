@@ -35,6 +35,26 @@ module.exports = {
         }),
       },
       {
+        test: /\.less$/i,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                sourceMap: true,
+                importLoaders: 1,
+                localIdentName: '[local]_[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'less-loader'
+            }
+          ]
+        })
+      },
+      {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         loader: 'url-loader',
         options: {
