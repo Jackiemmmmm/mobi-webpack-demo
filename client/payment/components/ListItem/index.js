@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames'
+import classNames from 'classnames';
 import styles from './ListItem.css';
 
 const ListItem = ({ data, pushTo }) => {

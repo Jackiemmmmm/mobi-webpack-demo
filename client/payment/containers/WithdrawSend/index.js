@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import NavBar from '../../components/NavBar';
 import styles from './withdrawSend.css';
 // import { linkSaga } from '../../actions';
 
@@ -13,10 +12,9 @@ class WithdrawSend extends Component {
   // <SendComponent />
   // <ClickBtn text={'Send'} />
   render() {
-    const { bits } = this.props;
+    const { bits, sendData } = this.props;
     return (
       <div className={styles.withdraw}>
-        <NavBar title={'Withdraw'} />
         <div>
           <h6>Send</h6>
           <div>
@@ -25,6 +23,17 @@ class WithdrawSend extends Component {
               <input type="number" placeholder="Amount" />
               <span>Available: {bits} bits</span>
             </div>
+            <span>bits</span>
+          </div>
+        </div>
+        <div>
+          <h6>to {sendData.title} ({sendData.num})</h6>
+          <div>
+            <span>{sendData.image}</span>
+            <div>
+              <input type="number" placeholder="Amount" />
+            </div>
+            <span>{sendData.currency}</span>
           </div>
         </div>
       </div>
@@ -33,7 +42,8 @@ class WithdrawSend extends Component {
 }
 export default connect(
   state => ({
-    bits: state.Withdraw.bits
+    bits: state.Withdraw.bits,
+    sendData: state.Withdraw.sendData
   }),
   // dispatch => ({
   //   linkSaga: bindActionCreators(linkSaga, dispatch)

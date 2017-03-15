@@ -1,5 +1,5 @@
 const defaultState = {
-  defaultDeposit: 'none'
+  defaultDeposit: 'none',
 }
 const Deposit = (state = defaultState, action) => {
   switch (action.type) {

@@ -2924,12 +2924,6 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-less-loader@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-2.2.3.tgz#b6d8f8139c8493df09d992a93a00734b08f84528"
-  dependencies:
-    loader-utils "^0.2.5"
-
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.3.0.tgz#3b09924edf9f083c0490fdd4c0bc4421e04764ee"
@@ -2951,7 +2945,7 @@ loader-runner@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
 
-loader-utils@^0.2, loader-utils@^0.2.16, loader-utils@^0.2.5:
+loader-utils@^0.2, loader-utils@^0.2.16:
   version "0.2.17"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-0.2.17.tgz#f86e6374d43205a6e6c60e9196f17c0299bfb348"
   dependencies:
@@ -4186,10 +4180,6 @@ redux-actions@^2.0.1:
     invariant "^2.2.1"
     lodash "^4.13.1"
     reduce-reducers "^0.1.0"
-
-redux-saga@^0.14.3:
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.14.3.tgz#28cd2c5b49cf780a1de25875765724150c630513"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

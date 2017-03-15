@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import NavBar from '../../components/NavBar';
+import { browserHistory } from 'react-router'
 import ListItem from '../../components/ListItem';
 import styles from './withdraw.css';
-// import { linkSaga } from '../../actions';
+import { goToSend } from '../../actions';
 
 class Withdraw extends Component {
   constructor(props) {
@@ -36,28 +36,34 @@ class Withdraw extends Component {
   render() {
     return (
       <div className={styles.withdraw}>
-        <NavBar title={'Withdraw'} />
-        {this.props.test}
         <div style={{ width: '100%', height: '1px', backgroundColor: 'black' }} />
         {this.state.updateData.length > 0 && this.state.updateData.map(data =>
           <ListItem
             key={data.title}
             data={data}
-            pushTo={() => this._linkTo(data.title)}
+            pushTo={() => this._linkTo(data)}
           />)}
       </div>
     )
   }
-  _linkTo(title) {
-    console.log(title);
+  _linkTo(data) {
+    browserHistory.push(`/withdraw:${data.num}`);
+    goToSend(data)
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  console.log('dispatch', dispatch)
+  return {
+    goToSend: (data) => {
+      dispatch(goToSend(data))
+    }
+  }
+}
+
 export default connect(
   // state => ({
   //   test: state.Withdraw.defaultWithdraw
-  // }),
-  // dispatch => ({
-  //   linkSaga: bindActionCreators(linkSaga, dispatch)
   // })
-  null
+  null,
+  mapDispatchToProps
 )(Withdraw)
