@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import styles from './NavBar.css';
 
 const goBack = () => (
-  window.location.pathname !== '/' && window.location.pathname !== '/withdraw' && window.location.pathname !== '/deposit'
+  window.location.pathname !== '/' && window.location.pathname !== '/withdraw' && window.location.pathname !== '/deposit' && window.location.pathname !== '/telFare'
 )
 
 const NavBar = ({ title }) => (

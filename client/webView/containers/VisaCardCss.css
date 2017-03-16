@@ -1,6 +1,6 @@
 @import '../../common/css/common.css';
 
-@blue: #3586ea;
+@value blue: #3586ea;
 .cardWarrper {
   flex-direction: row;
   width: 100%;
@@ -35,23 +35,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    // position: relative;
     .cardPosition {
       width: 77.2%;
       position: relative;
       img {
         width: 100%;
       }
-      // span {
-      //   position: absolute;
-      //   top: calc(~"50% - 4.5rem");
-      //   right: 0;
-      //   width: 1.3rem;
-      //   height: 9rem;
-      //   background: rgba(255, 255, 255, 0.23);
-      //   border-top-left-radius: 9px;
-      //   border-bottom-left-radius: 9px;
-      // }
       p {
         position: absolute;
         color: white;
@@ -83,7 +72,7 @@
     .btnApply {
       width: 80%;
       height: 2.8rem;
-      background: @blue;
+      background: blue;
       border-radius: 0.3rem;
       color: white;
       text-align: center;
@@ -94,7 +83,7 @@
       line-height: 2.8rem;
     }
     .btnKnowMore {
-      color: @blue;
+      color: blue;
       text-decoration: underline;
       padding: 1.1rem;
       padding-top: 0;

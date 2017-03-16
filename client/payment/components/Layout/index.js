@@ -11,7 +11,9 @@ const NavTitle = function(pathname) {
     case '/profile':
       return 'My Profile';
     case '/history':
-      return 'Transfer History'
+      return 'Transfer History';
+    case '/telFare':
+      return 'Mobile Top Up';
     default:
       return 'Withdraw';
   }
