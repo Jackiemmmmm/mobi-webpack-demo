@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import NavBar from '../../components/NavBar';
 import styles from './layout.css';
 
@@ -19,14 +19,18 @@ const NavTitle = function(pathname) {
   }
 }
 
-const Layout = function(props) {
-  const pathname = NavTitle(props.location.pathname);
-  return (
-    <div style={styles.wrapper}>
-      <NavBar title={pathname} />
-      {props.children}
-    </div>
-  )
+export default class Layout extends Component {
+  render() {
+    const pathname = NavTitle(this.props.location.pathname);
+    return (
+      <div style={styles.wrapper}>
+        <NavBar title={pathname} pop={() => this._backToNative()} />
+        {this.props.children}
+      </div>
+    )
+  }
+  _backToNative() {
+    // native go back method
+    console.log('_backToNative');
+  }
 }
-
-export default Layout;

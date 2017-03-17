@@ -1,3 +1,58 @@
+@value black: rgba(51, 51, 51, 1);
+@media all and (orientation : landscape) {  
+  .alertWrap {
+	  display: flex !important;
+	}
+  .hide {
+    display: none !important;
+  }
+}
+.alertWrap {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.inputNumber {
+  width: 100%;
+  height: 5rem;
+  padding: 0 4%;
+  background: white;
+  margin-bottom: 1.3rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  label {
+    input {
+      width: 65%;
+      font-size: 1.8rem;
+      color: black;
+      background: none;
+      border: 0;
+    }
+    span {
+      font-size: 0.675rem;
+    }
+  }
+  a {
+    display: inline-block;
+    padding: 0.5rem;
+  }
+}
+.mobileTitle {
+  font-weight: normal;
+  font-size: 0.875rem;
+  color: black;
+  margin-bottom: 1.5rem;
+  margin-left: 4%;
+}
 .priceWrap {
   width: 98%;
   display: flex;

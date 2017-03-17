@@ -1,14 +1,28 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import styles from './NavBar.css';
+import ArrowLeftIcon from '../../icons/ArrowLeftIcon';
 
-const goBack = () => (
-  window.location.pathname !== '/' && window.location.pathname !== '/withdraw' && window.location.pathname !== '/deposit' && window.location.pathname !== '/telFare'
-)
+const isShow = () => {
+  switch (window.location.pathname) {
+    case '/':
+    case '/withdraw':
+    case '/deposit':
+      return false;
+    case '/telFare':
+      return true;
+    default:
+      return true;
+  }
+}
 
-const NavBar = ({ title }) => (
+const NavBar = ({ title, pop }) => (
   <header className={styles.header}>
-    {goBack() && <a onClick={() => browserHistory.goBack()} className={styles.arrowLeft}>pop</a>}
+    {isShow() &&
+      <a
+        onClick={() => (pop ? pop() : browserHistory.goBack())}
+        className={styles.arrowLeft}
+      ><ArrowLeftIcon /></a>}
     <h3>{title}</h3>
   </header>
 )
