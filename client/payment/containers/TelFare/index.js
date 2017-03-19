@@ -8,7 +8,7 @@ import DeleteIcon from '../../icons/DeleteIcon';
 
 const FareItem = ({ price, checkIndex, chose }) => (
   <a className={classNames(styles.fareItem, chose && styles.chose)} onClick={() => checkIndex()}>
-    <span>{price}</span>
+    <span>&yen;{price}</span>
   </a>
 );
 
@@ -66,10 +66,10 @@ class TelFare extends Component {
               chose={this.state.chose === idx}
             />)}
         </div>
-        <div>
-          <span>Available {formatPrice(this._testAvailable)}</span>
+        <div className={styles.total}>
+          <p>Total Balance <span>{formatPrice(this._testAvailable)}</span></p>
         </div>
-        <button onClick={() => this._submitFare()}>
+        <button className={styles.btn} onClick={() => this._submitFare()}>
           Top Up
         </button>
         <LandscapeAlert isShow={this.state.show} onClick={() => this.setState({ show: true })} />
