@@ -1,24 +1,12 @@
-// import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from './fare.css';
 import { formatPrice } from '../../../common/utlis/format';
 import DeleteIcon from '../../icons/DeleteIcon';
-
-const FareItem = ({ price, checkIndex, chose }) => (
-  <a className={classNames(styles.fareItem, chose && styles.chose)} onClick={() => checkIndex()}>
-    <span>&yen;{price}</span>
-  </a>
-);
-
-const LandscapeAlert = ({ isShow, onClick }) => (
-  <div className={classNames(styles.alertWrap, isShow && styles.hide)}>
-    <p>竖屏体验更佳</p>
-    <br />
-    <a onClick={() => onClick()}>知道了</a>
-  </div>
-);
+import LandscapeAlert from './LandscapeAlert';
+import FareItem from './FareItem';
 
 class TelFare extends Component {
   constructor(props) {
@@ -30,18 +18,29 @@ class TelFare extends Component {
       price: null,
       show: false
     }
-    this.lastVal = 0;
+    this.lastVal = '';
+    this.input = null;
   }
   componentWillMount() {
-    this._testAvailable = 1590.32;
-    this._fromNativeNumber = '185 1601 1992'
+    if (window.JSInterface) {
+      this._testAvailable = window.JSInterface.getRmbBalance();
+      this.setState({
+        tel: window.JSInterface.getPhoneNum()
+      });
+    }
+    this._checkCompany();
+  }
+  componentDidMount() {
+    this.input.focus();
   }
   render() {
     return (
       <div>
         <div className={styles.inputNumber}>
           <label htmlFor="tel">
+            +86
             <input
+              ref={e => (this.input = e)}
               id="tel"
               type="text"
               name="phone"
@@ -51,11 +50,10 @@ class TelFare extends Component {
               maxLength={13}
               pattern="[0-9]*"
             />
-            中国电信
           </label>
-          {this.state.tel.length > 0 && <a onClick={() => this.setState({ tel: '' })}><DeleteIcon /></a>}
+          <span>中国电信</span>
+          {this.state.tel.length > 0 && <a onClick={() => { this.setState({ tel: '' }); this.input.focus(); }}><DeleteIcon /></a>}
         </div>
-
         <h3 className={styles.mobileTitle}>Mobile Top Up</h3>
         <div className={styles.priceWrap}>
           {this.state.canBuy.map((price, idx) =>
@@ -69,67 +67,58 @@ class TelFare extends Component {
         <div className={styles.total}>
           <p>Total Balance <span>{formatPrice(this._testAvailable)}</span></p>
         </div>
-        <button className={styles.btn} onClick={() => this._submitFare()}>
+        <button
+          className={classNames(styles.btn, this.state.tel.length !== 13 && styles.unClick)}
+          onClick={() => this._submitFare()}
+        >
           Top Up
         </button>
         <LandscapeAlert isShow={this.state.show} onClick={() => this.setState({ show: true })} />
       </div>
     )
   }
-  // _checkCompany() {
-  // {this._checkCompany(this.state.tel)}
-  // if (tel.length !== 11) return;
-  // fetch('https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=15850781443', {
-  //   method: 'GET'
-  // }).then(res => (
-  //   console.log(res.json())
-  // )).then(err => (
-  //   console.log(err)
-  // ));
-  // }
+  _checkCompany() {
+    const body = JSON.stringify({ phoneNum: '18516011992' })
+    // { this._checkCompany(this.state.tel) }
+    fetch('http://172.16.1.36:3000', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      mode: 'no-cors',
+      body: body
+    }).then((res) => {
+      // console.log(res, res.blob(), res.body, 'res');
+      res.text().then(resolve => console.log(resolve));
+    }).catch(err => (
+      console.log(err)
+    ))
+  }
   _change(event) {
-    const val = event.target.value;
-    console.log(this.lastVal, val.length);
-    // console.log(a);
-    // if (val.length === 3 || val.length === 8) {
-    //   if (this.lastVal && this.lastVal.length > val.length) {
-    //     this.lastVal = a.slice(0, -1);
-    //     return this.setState({ tel: a.slice(0, -1) });
-    //   }
-    //   this.lastVal = a.concat(' ');
-    //   return this.setState({ tel: a.concat(' ') });
-    // }
-    const test = '';
-    const b = val.substring(0, 3).concat(' ');
-    const c = val.substring(4, 8).concat(' ');
-    if (this.lastVal < val.length) {
-      switch (val.length) {
-        case 3:
-          this.lastVal = test.concat(b).length
-          return this.setState({ tel: test.concat(b) });
-        case 8:
-          this.lastVal = test.concat(b, c).length
-          return this.setState({ tel: test.concat(b, c) });
-        default:
-          this.lastVal = val.length
-          return this.setState({ tel: val });
-      }
-    } else if (this.lastVal > val.length) {
-      switch (val.split(' ').join('').length) {
-        case 3:
-          this.lastVal = test.slice(0, -1).length
-          return this.setState({ tel: val.slice(0, -1) });
-        case 8:
-          this.lastVal = test.slice(0, -1).length
-          return this.setState({ tel: val.slice(0, -1) });
-        default:
-          this.lastVal = val.length
-          return this.setState({ tel: val });
-      }
+    const eventTarget = event.target.value;
+    if (eventTarget.length === 13) {
+      this.setState({ tel: eventTarget });
+      this.lastVal = eventTarget;
+      return;
     }
+    const val = eventTarget.replace(/\s/g, '');
+    const a = val.substring(0, 3);
+    const b = val.substring(3, 7);
+    const c = val.substring(7, 11);
+    let newVal = '';
+    if (a && b && c) {
+      newVal = `${a} ${b} ${c}`;
+    } else if (a && b) {
+      newVal = `${a} ${b}`
+    } else {
+      newVal = `${a}`
+    }
+    this.setState({
+      tel: newVal
+    });
   }
   _submitFare() {
-    if (this.state.tel.length !== 11) return alert('请输入正确的电话号码');
+    if (this.state.tel.length !== 13) return alert('请输入正确的电话号码');
     if (this.state.price === null) return alert('请选择价格');
     console.log(this.state.tel, this.state.price);
   }

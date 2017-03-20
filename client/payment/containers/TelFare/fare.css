@@ -23,24 +23,33 @@
 }
 .inputNumber {
   width: 100%;
-  height: 5rem;
+  height: 5.5rem;
   padding: 0 4%;
   background: white;
   margin-bottom: 1.3rem;
   justify-content: center;
   align-items: center;
   display: flex;
+  position: relative;
   label {
+    font-size: 1.8rem;
+    color: black;
     input {
-      width: 65%;
-      font-size: 1.8rem;
-      color: black;
+      width: 75%;
       background: none;
       border: 0;
+      border-left: 1px solid rgba(229, 229, 229, 1);
+      margin-left: 0.5rem;
+      padding-left: 0.5rem;
+      border-radius: 0;
     }
-    span {
-      font-size: 0.675rem;
-    }
+  }
+  span {
+    color: rgba(153, 153, 153, 1);
+    font-size: 0.675rem;
+    position: absolute;
+    bottom: 0.3rem;
+    left: 5.4rem;
   }
   a {
     display: inline-block;
@@ -73,6 +82,13 @@
     border: 1px solid transparent;
     color: black;
     background: #FFFFFF;
+    position: relative;
+    transition: 0.3s;
+    svg {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
     &.chose {
       border-color: blue;
       color: blue
@@ -112,4 +128,8 @@
   border-radius: 4px;
   color: white;
   font-size: 1.1rem;
+  transition: 0.3s;
+}
+.unClick {
+  background: rgba(44, 141, 232, 0.5);
 }

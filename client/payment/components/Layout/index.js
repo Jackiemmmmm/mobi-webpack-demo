@@ -31,6 +31,8 @@ export default class Layout extends Component {
   }
   _backToNative() {
     // native go back method
-    console.log('_backToNative');
+    if (window.JSInterface) {
+      window.JSInterface.toFinish()
+    }
   }
 }
