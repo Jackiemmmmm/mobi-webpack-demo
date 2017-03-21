@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import styles from './fare.css';
 import { formatPrice } from '../../../common/utlis/format';
 import DeleteIcon from '../../icons/DeleteIcon';
-import LandscapeAlert from './LandscapeAlert';
 import FareItem from './FareItem';
 
 class TelFare extends Component {
@@ -14,9 +13,10 @@ class TelFare extends Component {
     this.state = {
       tel: '',
       canBuy: [30, 50, 100, 200, 300, 500],
-      chose: null,
-      price: null,
-      show: false
+      chose: 0,
+      price: 30,
+      type: '',
+      isShow: true
     }
     this.lastVal = '';
     this.input = null;
@@ -24,16 +24,21 @@ class TelFare extends Component {
   componentWillMount() {
     if (window.JSInterface) {
       this._testAvailable = window.JSInterface.getRmbBalance();
-      this.setState({
-        tel: window.JSInterface.getPhoneNum()
-      });
+      const getPhoneNum = window.JSInterface.getPhoneNum();
+      this._formatPhone(getPhoneNum, newVal => (
+        this.setState({
+          tel: newVal
+        })
+      ))
+      this._checkCompany(getPhoneNum);
     }
-    this._checkCompany();
   }
   componentDidMount() {
     this.input.focus();
   }
   render() {
+    const telLength = this.state.tel.length
+    console.log(telLength, this.state.isShow);
     return (
       <div>
         <div className={styles.inputNumber}>
@@ -42,7 +47,7 @@ class TelFare extends Component {
             <input
               ref={e => (this.input = e)}
               id="tel"
-              type="text"
+              type="tel"
               name="phone"
               onChange={event => this._change(event)}
               value={this.state.tel}
@@ -51,8 +56,8 @@ class TelFare extends Component {
               pattern="[0-9]*"
             />
           </label>
-          <span>中国电信</span>
-          {this.state.tel.length > 0 && <a onClick={() => { this.setState({ tel: '' }); this.input.focus(); }}><DeleteIcon /></a>}
+          <span>{telLength === 13 && this.state.type}</span>
+          {telLength > 0 && <a onClick={() => { this.setState({ tel: '' }); this.input.focus(); }}><DeleteIcon /></a>}
         </div>
         <h3 className={styles.mobileTitle}>Mobile Top Up</h3>
         <div className={styles.priceWrap}>
@@ -68,28 +73,40 @@ class TelFare extends Component {
           <p>Total Balance <span>{formatPrice(this._testAvailable)}</span></p>
         </div>
         <button
-          className={classNames(styles.btn, this.state.tel.length !== 13 && styles.unClick)}
+          className={classNames(styles.btn,
+            (telLength !== 13 || !this.state.isShow) && styles.unClick)}
           onClick={() => this._submitFare()}
         >
           Top Up
         </button>
-        <LandscapeAlert isShow={this.state.show} onClick={() => this.setState({ show: true })} />
       </div>
     )
   }
-  _checkCompany() {
-    const body = JSON.stringify({ phoneNum: '18516011992' })
-    // { this._checkCompany(this.state.tel) }
-    fetch('http://172.16.1.36:3000', {
+  _checkCompany(tel) {
+    const body = JSON.stringify({ phoneNum: tel });
+    fetch('http://10.0.20.227:3000/area', {
       method: 'POST',
       headers: {
+        Accept: '*/*',
         'Content-Type': 'application/json'
       },
-      mode: 'no-cors',
       body: body
     }).then((res) => {
       // console.log(res, res.blob(), res.body, 'res');
-      res.text().then(resolve => console.log(resolve));
+      res.text().then((resolve) => {
+        const resp = JSON.parse(resolve);
+        if (resp.status === 'success' && resp.message) {
+          this.setState({
+            type: resp.message.type.replace('中国', resp.message.province),
+            isShow: true
+          })
+        } else {
+          this.setState({
+            type: '输入信息有误',
+            isShow: false
+          })
+        }
+      });
     }).catch(err => (
       console.log(err)
     ))
@@ -99,27 +116,33 @@ class TelFare extends Component {
     if (eventTarget.length === 13) {
       this.setState({ tel: eventTarget });
       this.lastVal = eventTarget;
+      this._checkCompany(eventTarget.replace(/\s/g, ''))
       return;
     }
     const val = eventTarget.replace(/\s/g, '');
+    this._formatPhone(val, newVal => (
+      this.setState({
+        tel: newVal,
+        type: '',
+        isShow: false
+      })
+    ));
+  }
+  _formatPhone(val, newVal) {
     const a = val.substring(0, 3);
     const b = val.substring(3, 7);
     const c = val.substring(7, 11);
-    let newVal = '';
     if (a && b && c) {
-      newVal = `${a} ${b} ${c}`;
+      return newVal(`${a} ${b} ${c}`);
     } else if (a && b) {
-      newVal = `${a} ${b}`
-    } else {
-      newVal = `${a}`
+      return newVal(`${a} ${b}`);
     }
-    this.setState({
-      tel: newVal
-    });
+    newVal(`${a}`);
   }
   _submitFare() {
     if (this.state.tel.length !== 13) return alert('请输入正确的电话号码');
     if (this.state.price === null) return alert('请选择价格');
+    if (!this.state.isShow) return alert('请输入正确信息');
     console.log(this.state.tel, this.state.price);
   }
 }
