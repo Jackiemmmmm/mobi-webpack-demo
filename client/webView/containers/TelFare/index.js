@@ -18,10 +18,11 @@ class TelFare extends Component {
       price: 30,
       type: '',
       isShow: true,
-      hideInputPIN: true,
+      showInputPIN: false,
       hideToast: true,
       toastTitle: '',
       loading: false,
+      allLoading: false,
     }
     this.lastVal = '';
     this.input = null;
@@ -50,7 +51,6 @@ class TelFare extends Component {
               ref={e => (this.input = e)}
               id="tel"
               type="tel"
-              name="phone"
               onChange={event => this._change(event)}
               value={this.state.tel}
               placeholder={this._fromNativeNumber}
@@ -77,16 +77,17 @@ class TelFare extends Component {
         <button
           className={classNames(styles.btn,
             (telLength !== 13 || !this.state.isShow) && styles.unClick)}
-          onClick={() => this._submitFare()}
+          onClick={() => this._addPin()}
         >
           Top Up
         </button>
-        {!this.state.hideInputPIN && <InputPIN
+        {this.state.showInputPIN && <InputPIN
           title={'Please Enter Mobi PIN'}
-          onConfirm={num => this._changeState('submitFare', num)}
+          onConfirm={num => this._submitFare(num)}
           onCancel={() => this._changeState('hideInputPIN')}
         />}
         {!this.state.hideToast && <Toast title={this.state.toastTitle} onCancel={() => this._changeState('hideToast')} />}
+        {this.state.allLoading && <div style={{ position: 'fixed', width: '100%', height: '100%', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0, 0,0, 0.3)', justifyContent: 'center', alignItems: 'center', display: 'flex', color: 'white', fontSize: '1.5rem' }}>loading...</div>}
       </div>
     )
   }
@@ -99,10 +100,11 @@ class TelFare extends Component {
         return set({ chose: args[0], price: args[1] })
       case 'clearTel':
         return set({ tel: '' });
-      case 'submitFare':
-        return set({ num: args, hideInputPIN: true })
+      case 'showInputPIN':
+        return set({ showInputPIN: true });
       case 'hideInputPIN':
-        return set({ hideInputPIN: true });
+        if (args) return set({ showInputPIN: false, allLoading: args });
+        return set({ showInputPIN: false });
       case 'hideToast':
         return set({ hideToast: true });
       case 'fetchComponySuccess':
@@ -112,7 +114,7 @@ class TelFare extends Component {
       case 'formatPhone':
         return set({ tel: args, type: '', isShow: false });
       case 'toast':
-        return set({ toastTitle: args, hideToast: false });
+        return set({ toastTitle: args, hideToast: false, allLoading: false });
       case 'fetchComponyError':
         return set({ toastTitle: args, hideToast: false, type: '输入信息有误', isShow: true });
       default:
@@ -164,13 +166,16 @@ class TelFare extends Component {
     }
     newVal(`${a}`);
   }
-  _submitFare() {
+  _addPin() {
     if (this.state.tel.length !== 13) return this._changeState('toast', '请输入正确的电话号码');
     if (this.state.price === null) return this._changeState('toast', '请选择价格');
     if (!this.state.isShow) return this._changeState('toast', '请输入正确信息');
-    this._checkPin();
+    this._changeState('showInputPIN')
   }
-  _checkPin() {
+  _submitFare(num) {
+    if (num.length !== 6) return this._changeState('toast', '请输入6位Pin号');
+    console.log(num);
+    this._changeState('hideInputPIN', true)
     fetch('https://staging-wallet-api.btcc.com/v2/cash/mobile_topup', {
       method: 'POST',
       headers: {
