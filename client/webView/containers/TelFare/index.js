@@ -1,10 +1,9 @@
 import fetch from 'isomorphic-fetch';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
 import styles from './fare.css';
 import { formatPrice } from '../../../common/utlis/format';
-import DeleteIcon from '../../icons/DeleteIcon';
+import DeleteIcon from '../../../common/icons/DeleteIcon';
 import FareItem from './FareItem';
 
 class TelFare extends Component {
@@ -38,7 +37,6 @@ class TelFare extends Component {
   }
   render() {
     const telLength = this.state.tel.length
-    console.log(telLength, this.state.isShow);
     return (
       <div>
         <div className={styles.inputNumber}>
@@ -84,15 +82,10 @@ class TelFare extends Component {
   }
   _checkCompany(tel) {
     const body = JSON.stringify({ phoneNum: tel });
-    fetch('http://10.0.20.227:3000/area', {
-      method: 'POST',
-      headers: {
-        Accept: '*/*',
-        'Content-Type': 'application/json'
-      },
-      body: body
-    }).then((res) => {
-      // console.log(res, res.blob(), res.body, 'res');
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    this.fetchData('http://10.0.20.227:3000/area', 'POST', body, headers).then((res) => {
       res.text().then((resolve) => {
         const resp = JSON.parse(resolve);
         if (resp.status === 'success' && resp.message) {
@@ -113,14 +106,15 @@ class TelFare extends Component {
   }
   _change(event) {
     const eventTarget = event.target.value;
+    const fromatEvent = eventTarget.replace(/\s/g, '');
+
     if (eventTarget.length === 13) {
       this.setState({ tel: eventTarget });
+      if (eventTarget !== this.lastVal) this._checkCompany(fromatEvent);
       this.lastVal = eventTarget;
-      this._checkCompany(eventTarget.replace(/\s/g, ''))
       return;
     }
-    const val = eventTarget.replace(/\s/g, '');
-    this._formatPhone(val, newVal => (
+    this._formatPhone(fromatEvent, newVal => (
       this.setState({
         tel: newVal,
         type: '',
@@ -140,11 +134,24 @@ class TelFare extends Component {
     newVal(`${a}`);
   }
   _submitFare() {
-    if (this.state.tel.length !== 13) return alert('请输入正确的电话号码');
-    if (this.state.price === null) return alert('请选择价格');
-    if (!this.state.isShow) return alert('请输入正确信息');
+    // if (this.state.tel.length !== 13) return alert('请输入正确的电话号码');
+    // if (this.state.price === null) return alert('请选择价格');
+    // if (!this.state.isShow) return alert('请输入正确信息');
     console.log(this.state.tel, this.state.price);
+    fetch('https://staging-wallet-api.btcc.com/v2/cash/mobile_topup', {
+      method: 'POST',
+      headers: {
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21vYmkubWUiLCJleHAiOjE0OTI3NTM1NDEsImlhdCI6MTQ5MDE2MTU0MSwicGljYXNzb19qd3QiOnsiX2lkIjoiYTQxYTk0NzA4NDBkNGQwNjgyN2JlZTMyYjMwZDlhMmQifX0.6Lyqp0fBcPTPptTzmDTZGErSZfTJDWSUZCwU9Us3kNk',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'amount=5000000000&mobile=18817870535&pin=d4913ba2f5141ba5229fd0d255f31432'
+    }).then((resp) => {
+      resp.text().then(resolve => console.log(resolve));
+    })
+  }
+  fetchData(url, method, body, headers) {
+    return fetch(url, { method, headers, body })
   }
 }
 
-export default connect()(TelFare);
+export default TelFare;

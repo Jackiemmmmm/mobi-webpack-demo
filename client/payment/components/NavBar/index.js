@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import styles from './NavBar.css';
-import ArrowLeftIcon from '../../icons/ArrowLeftIcon';
+import ArrowLeftIcon from '../../../common/icons/ArrowLeftIcon';
 
 const isShow = () => {
   switch (window.location.pathname) {
@@ -9,8 +9,6 @@ const isShow = () => {
     case '/withdraw':
     case '/deposit':
       return false;
-    case '/telFare':
-      return true;
     default:
       return true;
   }

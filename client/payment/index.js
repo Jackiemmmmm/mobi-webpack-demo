@@ -10,7 +10,6 @@ import Recipient from './containers/Recipient';
 import Profile from './containers/Profile';
 import TransferHistory from './containers/TransferHistory';
 import Layout from './components/Layout';
-import TelFare from './containers/TelFare';
 
 import configure from './store';
 
@@ -27,7 +26,6 @@ ReactDOM.render(
         <Route path="/profile" component={Profile} />
         <Route path="/history" component={TransferHistory} />
         <Route path="/withdrawSend" component={WithdrawSend} />
-        <Route path="/telFare" component={TelFare} />
       </Route>
       <Route path="*" component={ErrorPage} />
     </Router>

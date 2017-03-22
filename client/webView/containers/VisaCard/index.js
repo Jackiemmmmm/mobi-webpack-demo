@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styles from './VisaCardCss.css';
-import VisaCardImg from '../images/card_blocked.png';
+import VisaCardImg from '../../images/card_blocked.png';
 import message from './message.json';
-import ArrowLeftIcon from '../icons/ArrowLeftIcon';
+import ArrowLeftIcon from '../../../common/icons/ArrowLeftIcon';
 
 export default class VisaCard extends Component {
   constructor(props) {
