@@ -7,7 +7,7 @@
   "author": "Jackiemmmmm <jackie.tu@btcc.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9000 --host 0.0.0.0",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9001 --host 0.0.0.0",
     "start:webview": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.web.js --history-api-fallback --hot --inline --progress --port 9000 --host 0.0.0.0",
     "start:payment": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.payment.js --history-api-fallback --hot --inline --progress --port 9001 --host 0.0.0.0",
     "build": "rimraf build && npm run build:payment",
@@ -57,6 +57,8 @@
     "babel-runtime": "^6.23.0",
     "classnames": "^2.2.5",
     "isomorphic-fetch": "^2.2.1",
+    "js-md5": "^0.4.2",
+    "js-sha256": "^0.5.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",

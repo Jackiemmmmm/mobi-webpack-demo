@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import classNames from 'classnames';
+import sha256 from 'js-sha256';
+import md5 from 'js-md5';
 import styles from './fare.css';
 import { formatPrice } from '../../../common/utlis/format';
 import DeleteIcon from '../../../common/icons/DeleteIcon';
 import FareItem from './FareItem';
 import InputPIN from './InputPIN';
 import Toast from './Toast';
+import ArrowLeftIcon from '../../../common/icons/ArrowLeftIcon';
 
 class TelFare extends Component {
   constructor(props) {
@@ -14,8 +17,8 @@ class TelFare extends Component {
     this.state = {
       tel: '',
       canBuy: [30, 50, 100, 200, 300, 500],
-      chose: 0,
-      price: 30,
+      chose: 1,
+      price: 50,
       type: '',
       isShow: true,
       showInputPIN: false,
@@ -44,6 +47,13 @@ class TelFare extends Component {
     const telLength = this.state.tel.length
     return (
       <div>
+        <header className={styles.header}>
+          <a
+            onClick={() => (window.JSInterface && window.JSInterface.toFinish())}
+            className={styles.arrowLeft}
+          ><ArrowLeftIcon /></a>
+          <h3>Mobi Pop Up</h3>
+        </header>
         <div className={styles.inputNumber}>
           <label htmlFor="tel">
             +86
@@ -69,14 +79,14 @@ class TelFare extends Component {
               price={price}
               checkIndex={() => this._changeState('choseItem', [idx, price])}
               chose={this.state.chose === idx}
-            />) }
+            />)}
         </div>
         <div className={styles.total}>
-          <p>Total Balance <span>{formatPrice(this._testAvailable) }</span></p>
+          <p>Total Balance <span>{formatPrice(this._testAvailable)}</span></p>
         </div>
         <button
           className={classNames(styles.btn,
-            (telLength !== 13 || !this.state.isShow) && styles.unClick)}
+            (telLength !== 13 || this.state.type === '请输入正确手机号码') && styles.unClick)}
           onClick={() => this._addPin()}
         >
           Top Up
@@ -110,13 +120,13 @@ class TelFare extends Component {
       case 'fetchComponySuccess':
         return set({ type: args, isShow: true });
       case 'fetchComponyFail':
-        return set({ type: '输入信息有误', isShow: true });
+        return set({ type: '请输入正确手机号码', isShow: true });
+      case 'fetchComponyError':
+        return set({ toastTitle: args, hideToast: false, type: '请输入正确手机号码', isShow: true });
       case 'formatPhone':
         return set({ tel: args, type: '', isShow: false });
       case 'toast':
         return set({ toastTitle: args, hideToast: false, allLoading: false });
-      case 'fetchComponyError':
-        return set({ toastTitle: args, hideToast: false, type: '输入信息有误', isShow: true });
       default:
         break;
     }
@@ -127,13 +137,13 @@ class TelFare extends Component {
       'Content-Type': 'application/json',
     }
     this._changeState('loading', true);
-    this.fetchData('http://10.0.20.227:3000/area', 'POST', body, headers).then((res) => {
+    this.fetchData('http://10.0.20.205:3000/area', 'POST', body, headers).then((res) => {
       res.text().then((resolve) => {
         const resp = JSON.parse(resolve);
         if (resp.status === 'success' && resp.message) {
-          this._changeState('fetchComponySuccess', resp.message.type.replace('中国', resp.message.province))
+          this._changeState('fetchComponySuccess', resp.message.type.replace('中国', resp.message.province));
         } else {
-          this._changeState('fetchComponyFail')
+          this._changeState('fetchComponyFail');
         }
       });
     }).catch((err) => {
@@ -144,16 +154,12 @@ class TelFare extends Component {
   _change(event) {
     const eventTarget = event.target.value;
     const fromatEvent = eventTarget.replace(/\s/g, '');
-
-    if (eventTarget.length === 13) {
-      this._changeState('tel', eventTarget);
-      if (eventTarget !== this.lastVal) this._checkCompany(fromatEvent);
-      this.lastVal = eventTarget;
-      return;
-    }
-    this._formatPhone(fromatEvent, newVal => (
-      this._changeState('formatPhone', newVal)
-    ));
+    if (eventTarget.length === 13 && this.lastVal.length === 13) return;
+    if (eventTarget.length === 13) this._checkCompany(fromatEvent);
+    this._formatPhone(fromatEvent, (newVal) => {
+      this._changeState('formatPhone', newVal);
+      this.lastVal = newVal;
+    });
   }
   _formatPhone(val, newVal) {
     const a = val.substring(0, 3);
@@ -167,22 +173,35 @@ class TelFare extends Component {
     newVal(`${a}`);
   }
   _addPin() {
-    if (this.state.tel.length !== 13) return this._changeState('toast', '请输入正确的电话号码');
-    if (this.state.price === null) return this._changeState('toast', '请选择价格');
-    if (!this.state.isShow) return this._changeState('toast', '请输入正确信息');
+    if (this.state.tel.length !== 13) return;
+    if (this.state.price === null) return;
+    if (this.state.type === '请输入正确手机号码') return;
     this._changeState('showInputPIN')
   }
-  _submitFare(num) {
-    if (num.length !== 6) return this._changeState('toast', '请输入6位Pin号');
-    console.log(num);
-    this._changeState('hideInputPIN', true)
+  _submitFare(pin) {
+    if (pin.length !== 6) return this._changeState('toast', '请输入6位Pin号');
+    const pinString = pin.split('');
+    let sHashPin = '';
+    for (let i = 0; i < pinString.length; i += 1) {
+      const s = x => (x.charCodeAt(0));
+      const h = (parseFloat(pinString[i]) + i).toString().split('').map(s);
+      const t = h.join('').split('').map(s)
+      sHashPin += sha256.hex(t) + h.join('');
+    }
+    const newPin = md5.hex(sHashPin + pinString.join(''));
+    this._changeState('hideInputPIN', true);
+    const queryString = params => (`${Object.keys(params).map(k => [k, params[k]].map(encodeURIComponent).join('=')).join('&')}`);
     fetch('https://staging-wallet-api.btcc.com/v2/cash/mobile_topup', {
       method: 'POST',
       headers: {
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL21vYmkubWUiLCJleHAiOjE0OTI3NTM1NDEsImlhdCI6MTQ5MDE2MTU0MSwicGljYXNzb19qd3QiOnsiX2lkIjoiYTQxYTk0NzA4NDBkNGQwNjgyN2JlZTMyYjMwZDlhMmQifX0.6Lyqp0fBcPTPptTzmDTZGErSZfTJDWSUZCwU9Us3kNk',
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL21vYmkubWUiLCJwaWNhc3NvX2p3dCI6eyJfaWQiOiI0ODUzNTQyZGRmMjM0ZmQyODQ2NDYwMzc0NmE1OWQ3ZCJ9LCJleHAiOjE0OTI4NDMyOTcsImlhdCI6MTQ5MDI1MTI5N30.VKY11ZbbG2LGygjvCMF6k-gCIANYcpoa_tE_fIpLa8A',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: 'amount=5000000000&mobile=18817870535&pin=d4913ba2f5141ba5229fd0d255f31432'
+      body: queryString({
+        amount: `${this.state.price}00000000`,
+        mobile: this.state.tel.replace(/\s/g, ''),
+        pin: newPin
+      })
     }).then((resp) => {
       resp.text().then((resolve) => {
         const response = JSON.parse(resolve);

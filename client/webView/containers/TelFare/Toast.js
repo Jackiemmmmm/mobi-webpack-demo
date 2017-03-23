@@ -6,7 +6,7 @@ const Toast = ({ title, onCancel }) => (
     <div className={styles.pinWrap}>
       <p>{title}</p>
       <div>
-        <button onClick={() => onCancel()}>Cancel</button>
+        <a onClick={() => onCancel()}>Cancel</a>
       </div>
     </div>
   </div>
