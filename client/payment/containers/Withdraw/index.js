@@ -34,6 +34,7 @@ class Withdraw extends Component {
         <ListItem
           data={{ title: 'My Profile' }}
           pushTo={() => browserHistory.push('/profile')}
+          style={{ marginTop: '2rem', borderTop: '1px solid black' }}
         />
         <ListItem
           data={{ title: 'Transfer History' }}

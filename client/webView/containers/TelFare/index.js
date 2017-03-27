@@ -136,8 +136,7 @@ class TelFare extends Component {
     const headers = {
       'Content-Type': 'application/json',
     }
-    this._changeState('loading', true);
-    this.fetchData('http://10.0.20.205:3000/area', 'POST', body, headers).then((res) => {
+    this.fetchData('http://10.0.20.227:3000/area', 'POST', body, headers).then((res) => {
       res.text().then((resolve) => {
         const resp = JSON.parse(resolve);
         if (resp.status === 'success' && resp.message) {

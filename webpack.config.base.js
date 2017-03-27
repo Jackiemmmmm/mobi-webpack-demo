@@ -10,7 +10,8 @@ module.exports = {
   output: {
     path: BUILD_PATH,
     filename: ifProduction('scripts/[id].bundle.js?v=[hash]', 'scripts/[id].bundle.js'),
-    chunkFilename: ifProduction('scripts/[id].chunk.js?v=[chunkhash]', 'scripts/[id].chunk.js')
+    chunkFilename: ifProduction('scripts/[id].chunk.js?v=[chunkhash]', 'scripts/[id].chunk.js'),
+    publicPath: '/'
   },
   module: {
     rules: [

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import NavBar from '../../components/NavBar';
 import styles from './layout.css';
 
@@ -30,7 +31,8 @@ export default class Layout extends Component {
   _backToNative() {
     // native go back method
     if (window.JSInterface) {
-      window.JSInterface.toFinish()
+      return window.JSInterface.toFinish();
     }
+    return browserHistory.goBack();
   }
 }
