@@ -197,7 +197,7 @@ class TelFare extends Component {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: queryString({
-        amount: `${this.state.price}00000000`,
+        amount: `${this.state.price}`,
         mobile: this.state.tel.replace(/\s/g, ''),
         pin: newPin
       })

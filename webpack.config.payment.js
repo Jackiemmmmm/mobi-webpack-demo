@@ -11,9 +11,9 @@ module.exports = Object.assign({}, baseConfig, {
     vendor: [
       'react',
       'react-dom',
-      'redux',
       'react-router',
-      'redux-thunk'
+      'redux',
+      'redux-thunk',
     ]
   },
   plugins: baseConfig.plugins.concat([

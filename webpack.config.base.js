@@ -17,6 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
+        // include: '/client/',
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -35,6 +36,18 @@ module.exports = {
           ]
         }),
       },
+      // {
+      //   test: /\.css$/,
+      //   exclude: ['node_modules'],
+      //   use: [
+      //     {
+      //       loader: 'style-loader',
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //     },
+      //   ],
+      // },
       {
         test: /\.less$/i,
         use: ExtractTextPlugin.extract({
@@ -99,9 +112,10 @@ module.exports = {
   resolve: {
     modules: [
       resolve('client'),
-      'node_modules'
+      'node_modules',
+      join(__dirname, '../node_modules'),
     ],
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.ts', '.tsx', '.js', '.jsx', '.json']
   },
   plugins: removeEmpty([
     ifProduction(
@@ -131,7 +145,7 @@ module.exports = {
       filename: ifProduction('scripts/vendor.bundle.js?v=[hash]', 'scripts/vendor.bundle.js')
     }),
     new ExtractTextPlugin({
-      filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/[id].bundle.css'),
+      filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       allChunks: true,
       disable: false,
     })
