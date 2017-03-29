@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
+import fetch from 'isomorphic-fetch';
 import Picker from './Picker';
-// import styles from './profile.css';
+import InputItem from './InputItem';
+import styles from './profile.css';
 
 const generateNumberArray = (begin, end) => {
   const array = [];
@@ -11,24 +14,80 @@ const generateNumberArray = (begin, end) => {
 }
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPickerShow: false,
-      valueGroups: {
-        year: '1989',
-        month: '08',
-        day: '12'
-      },
-      optionGroups: {
-        year: generateNumberArray(1950, 2000),
-        month: generateNumberArray(1, 12),
-        day: generateNumberArray(1, 31)
-      }
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this
+  // }
+  state = {
+    isPickerShow: false,
+    isShow: false,
+    showOption: false,
+    valueGroups: {
+      year: '2000',
+      month: '01',
+      day: '01'
+    },
+    optionGroups: {
+      year: generateNumberArray(1950, 2010),
+      month: generateNumberArray(1, 12),
+      day: generateNumberArray(1, 31)
+    },
+    oldOptions: {},
+    SaveData: {}
+  };
+  _getCountry = {};
 
-  handleChange = (name, value) => {
+  componentWillMount() {
+    fetch('https://staging-wallet-api.btcc.com/v2/public/country', {
+      method: 'GET'
+    }).then((resp) => {
+      resp.text().then((resolve) => {
+        if (resolve.ref === 1) {
+          this._getCountry = resolve.countries;
+        }
+      });
+    }).catch(err => (console.log(err)));
+  }
+  render() {
+    const { optionGroups, valueGroups, isShow, showOption, oldOptions } = this.state;
+    return (
+      <div style={{ overflow: 'hidden' }}>
+        <InputItem name={'First Name'} type={'text'} getVal={this._getVal} />
+        <InputItem isShow={isShow} name={'Middle Name'} type={'text'} getVal={this._getVal} />
+        <InputItem name={'Last Name'} type={'text'} getVal={this._getVal} />
+        <div className={classNames(styles.addName, isShow && styles.hide)}>
+          <a onClick={() => this._changeState('AddName')}>Add Middle Name</a>
+        </div>
+        <InputItem name={'Email'} type={'email'} getVal={this._getVal} />
+        <div className={styles.choseItem}>
+          <a onClick={() => this._changeState('ShowOptions')}>{`${valueGroups.year}-${valueGroups.month}-${valueGroups.day}`}</a>
+        </div>
+        <InputItem name={'Phone number'} type={'tel'} getVal={this._getVal} onBlur={this._onBlur} />
+        <div className={styles.choseItem}>
+          <a onClick={() => this._changeState('ShowCountry')}>{navigator.language}</a>
+        </div>
+        <InputItem name={'Address'} type={'text'} getVal={this._getVal} />
+        <InputItem name={'City'} type={'text'} getVal={this._getVal} />
+        <InputItem name={'State/Province'} type={'text'} getVal={this._getVal} />
+        <InputItem name={'Postal code'} type={'tel'} getVal={this._getVal} />
+        {showOption && <div className={styles.optionWrap}>
+          <div className={styles.optionsPosition}>
+            <div className={styles.optionsBtn}>
+              <a onClick={() => this._changeState('HideOptions', oldOptions)}>Cancel</a>
+              <a onClick={() => this._changeState('HideOptions')}>OK</a>
+            </div>
+            <Picker
+              optionGroups={optionGroups}
+              valueGroups={valueGroups}
+              onChange={this._handleChange}
+            />
+          </div>
+        </div>}
+        <a onClick={this._submit}>Save</a>
+      </div>
+    );
+  }
+  _handleChange = (name, value) => {
     this.setState(({ valueGroups, optionGroups }) => {
       const nextState = {
         valueGroups: {
@@ -71,18 +130,83 @@ class Profile extends Component {
       return nextState;
     });
   };
+  _changeState = (name, args = null) => {
+    const { valueGroups, SaveData } = this.state;
+    const set = obj => (this.setState(obj));
+    let newData = {};
+    switch (name) {
+      case 'AddName':
+        return set({ isShow: true });
+      case 'ShowOptions':
+        return set({
+          showOption: true,
+          oldOptions: {
+            year: valueGroups.year,
+            month: valueGroups.month,
+            day: valueGroups.day
+          }
+        });
+      case 'HideOptions':
+        if (args) {
+          return set({
+            showOption: false,
+            valueGroups: {
+              year: args.year,
+              month: args.month,
+              day: args.day
+            },
+          })
+        }
+        return set({ showOption: false });
+      case 'SaveData':
+        newData = Object.assign({}, SaveData, args)
+        return set({ SaveData: newData });
+      default:
+        break;
+    }
+  }
+  _getVal = (e) => {
+    const val = e.target.value;
+    let SaveObj = {};
+    switch (e.target.name) {
+      case 'First Name':
+        SaveObj = { firstName: val };
+        break;
+      case 'Middle Name':
+        SaveObj = { middleName: val };
+        break;
+      case 'Last Name':
+        SaveObj = { lastName: val };
+        break;
+      case 'Email':
+        SaveObj = { email: val };
+        break;
+      case 'Phone number':
+        SaveObj = { phoneNumber: val };
+        break;
+      case 'Address':
+        SaveObj = { adress: val };
+        break;
+      case 'City':
+        SaveObj = { city: val };
+        break;
+      case 'State/Province':
+        SaveObj = { province: val };
+        break;
+      case 'Postal code':
+        SaveObj = { postalCode: val };
+        break;
+      default:
+        break;
+    }
+    this._changeState('SaveData', SaveObj);
+  }
+  _showOptionGroups = () => {
 
-  render() {
-    const { optionGroups, valueGroups } = this.state;
-    return (
-      <div>
-        <Picker
-          optionGroups={optionGroups}
-          valueGroups={valueGroups}
-          onChange={this.handleChange}
-        />
-      </div>
-    );
+  }
+  _submit = () => {
+    const { SaveData, valueGroups } = this.state;
+    console.log(SaveData, valueGroups, navigator.language);
   }
 }
 
