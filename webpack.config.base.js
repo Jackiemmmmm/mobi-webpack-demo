@@ -9,7 +9,7 @@ const BUILD_PATH = resolve(ROOT_PATH, 'build');
 module.exports = {
   output: {
     path: BUILD_PATH,
-    filename: ifProduction('scripts/[id].bundle.js?v=[hash]', 'scripts/[id].bundle.js'),
+    filename: ifProduction('scripts/[name].bundle.js?v=[hash]', 'scripts/[name].bundle.js'),
     chunkFilename: ifProduction('scripts/[id].chunk.js?v=[chunkhash]', 'scripts/[id].chunk.js'),
     publicPath: '/'
   },

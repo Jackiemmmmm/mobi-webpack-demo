@@ -63,13 +63,9 @@ class Profile extends Component {
           <a onClick={() => this._changeState('ShowOptions')}>{`${valueGroups.year}-${valueGroups.month}-${valueGroups.day}`}</a>
         </div>
         <InputItem name={'Phone number'} type={'tel'} getVal={this._getVal} onBlur={this._onBlur} />
-        <div className={styles.choseItem}>
-          <a onClick={() => this._changeState('ShowCountry')}>{navigator.language}</a>
-        </div>
         <InputItem name={'Address'} type={'text'} getVal={this._getVal} />
-        <InputItem name={'City'} type={'text'} getVal={this._getVal} />
-        <InputItem name={'State/Province'} type={'text'} getVal={this._getVal} />
-        <InputItem name={'Postal code'} type={'tel'} getVal={this._getVal} />
+        <InputItem name={'Indentity Document'} type={'file'} getVal={this._getVal} />
+        <InputItem name={'Proof of residency document'} type={'file'} getVal={this._getVal} />
         {showOption && <div className={styles.optionWrap}>
           <div className={styles.optionsPosition}>
             <div className={styles.optionsBtn}>
@@ -133,7 +129,6 @@ class Profile extends Component {
   _changeState = (name, args = null) => {
     const { valueGroups, SaveData } = this.state;
     const set = obj => (this.setState(obj));
-    let newData = {};
     switch (name) {
       case 'AddName':
         return set({ isShow: true });
@@ -159,8 +154,7 @@ class Profile extends Component {
         }
         return set({ showOption: false });
       case 'SaveData':
-        newData = Object.assign({}, SaveData, args)
-        return set({ SaveData: newData });
+        return set({ SaveData: Object.assign({}, SaveData, args) });
       default:
         break;
     }
@@ -187,14 +181,12 @@ class Profile extends Component {
       case 'Address':
         SaveObj = { adress: val };
         break;
-      case 'City':
-        SaveObj = { city: val };
+      case 'Indentity Document':
+        console.log(val, e.target);
+        // SaveObj = { city: val };
         break;
-      case 'State/Province':
-        SaveObj = { province: val };
-        break;
-      case 'Postal code':
-        SaveObj = { postalCode: val };
+      case 'Proof of residency document':
+        // SaveObj = { province: val };
         break;
       default:
         break;

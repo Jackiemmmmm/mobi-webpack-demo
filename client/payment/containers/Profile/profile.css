@@ -71,13 +71,19 @@
   justify-content: flex-end;
   background: white;
   border-bottom: 1px solid lightgray;
-  input {
+  > input, label {
     width: 70%;
     display: flex;
     text-align: right;
     justify-content: flex-end;
     border: 0;
     background: transparent;
+  }
+  label {
+    align-items: center;
+    input {
+      display: none;
+    }
   }
   &.hide {
     display: none;
