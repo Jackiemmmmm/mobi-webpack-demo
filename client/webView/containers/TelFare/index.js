@@ -10,6 +10,8 @@ import FareItem from './FareItem';
 import InputPIN from './InputPIN';
 import Toast from './Toast';
 import ArrowLeftIcon from '../../../common/icons/ArrowLeftIcon';
+// import queryString from '../../../common/utlis/queryString';
+import fetchApi from '../../../common/utlis/fetchApi';
 
 class TelFare extends Component {
   constructor(props) {
@@ -136,7 +138,11 @@ class TelFare extends Component {
     const headers = {
       'Content-Type': 'application/json',
     }
-    this.fetchData('http://10.0.20.227:3000/area', 'POST', body, headers).then((res) => {
+    fetch('http://10.0.20.227:3000/area', {
+      method: 'POST',
+      headers: headers,
+      body: body
+    }).then((res) => {
       res.text().then((resolve) => {
         const resp = JSON.parse(resolve);
         if (resp.status === 'success' && resp.message) {
@@ -177,8 +183,9 @@ class TelFare extends Component {
     if (this.state.type === '请输入正确手机号码') return;
     this._changeState('showInputPIN')
   }
-  _submitFare(pin) {
+  async _submitFare(pin) {
     if (pin.length !== 6) return this._changeState('toast', '请输入6位Pin号');
+
     const pinString = pin.split('');
     let sHashPin = '';
     for (let i = 0; i < pinString.length; i += 1) {
@@ -188,29 +195,27 @@ class TelFare extends Component {
       sHashPin += sha256.hex(t) + h.join('');
     }
     const newPin = md5.hex(sHashPin + pinString.join(''));
+
     this._changeState('hideInputPIN', true);
-    const queryString = params => (`${Object.keys(params).map(k => [k, params[k]].map(encodeURIComponent).join('=')).join('&')}`);
-    fetch('https://staging-wallet-api.btcc.com/v2/cash/mobile_topup', {
-      method: 'POST',
-      headers: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL21vYmkubWUiLCJwaWNhc3NvX2p3dCI6eyJfaWQiOiI0ODUzNTQyZGRmMjM0ZmQyODQ2NDYwMzc0NmE1OWQ3ZCJ9LCJleHAiOjE0OTI4NDMyOTcsImlhdCI6MTQ5MDI1MTI5N30.VKY11ZbbG2LGygjvCMF6k-gCIANYcpoa_tE_fIpLa8A',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: queryString({
-        amount: `${this.state.price}`,
-        mobile: this.state.tel.replace(/\s/g, ''),
-        pin: newPin
-      })
-    }).then((resp) => {
-      resp.text().then((resolve) => {
-        const response = JSON.parse(resolve);
-        if (response.ret === 1) {
-          this._changeState('toast', 'Mobile top up sent!');
-        } else {
-          this._changeState('toast', 'something be wrong');
-        }
-      });
-    }).catch(() => (this._changeState('toast', 'Internet to connect')))
+    const body = {
+      amount: `${this.state.price}`,
+      mobile: this.state.tel.replace(/\s/g, ''),
+      pin: newPin
+    }
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTM1MzUyNTQsImlzcyI6Imh0dHBzOi8vbW9iaS5tZSIsImlhdCI6MTQ5MDk0MzI1NCwicGljYXNzb19qd3QiOnsiX2lkIjoiZjEzMWM3OWVhNTRhNGJlYTk4ZDg0Mjg2NzYzNTk1ODUifX0.l3RQyyb-48JJVQMR1ljnGKSgoxzlSL5w-S3QvSkJb7I';
+    console.log(fetchApi);
+    const t = fetchApi('https://staging-wallet-api.btcc.com/v2/cash/mobile_topup', 'POST', body, token);
+    console.log(t);
+    // .then((resp) => {
+    //   resp.text().then((resolve) => {
+    //     const response = JSON.parse(resolve);
+    //     if (response.ret === 1) {
+    //       this._changeState('toast', 'Mobile top up sent!');
+    //     } else {
+    //       this._changeState('toast', 'something be wrong');
+    //     }
+    //   });
+    // }).catch(() => (this._changeState('toast', 'Internet to connect')))
   }
   fetchData(url, method, body, headers) {
     return fetch(url, { method, headers, body })

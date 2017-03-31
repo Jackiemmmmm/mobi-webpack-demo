@@ -34,11 +34,11 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Layout} >
-        <IndexRoute getComponent={Withdraw} />
+        <IndexRoute getComponent={Profile} />
+        <Route path="/profile" getComponent={Profile} />
         <Route path="/withdraw" getComponent={Withdraw} />
         <Route path="/deposit" getComponent={Withdraw} />
         <Route path="/newRecipient" getComponent={Recipient} />
-        <Route path="/profile" getComponent={Profile} />
         <Route path="/history" getComponent={TransferHistory} />
         <Route path="/withdrawSend" getComponent={WithdrawSend} />
       </Route>

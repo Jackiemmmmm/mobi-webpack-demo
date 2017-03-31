@@ -14,10 +14,6 @@ const generateNumberArray = (begin, end) => {
 }
 
 class Profile extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this
-  // }
   state = {
     isPickerShow: false,
     isShow: false,
